@@ -39,7 +39,14 @@ const stages = [
   { id: "lab-03", state: "lab", title: "Nginx jako reverse proxy", stack: "LAB 03 · Nginx · HTTP · 502", goal: "Wystawienie API lokalnie przez proxy na porcie 8080 i odtworzenie awarii 502 po zatrzymaniu API." },
   { id: "lab-04", state: "lab", title: "Filtrowanie API i testy", stack: "LAB 04 · SQLAlchemy · PostgreSQL · Pytest", goal: "Dodanie filtra severity po stronie bazy oraz testów poprawnych zapytań i błędu HTTP 422." },
   { id: "lab-05", state: "lab", title: "Bash i GitHub Actions", stack: "LAB 05 · Bash · GitHub Actions", goal: "Skrypt diagnostyczny z kodem wyjścia zależnym od /ready oraz dodatkowa kontrola składni przed pytest w istniejącym CI." },
-  { id: "worker", state: "plan", title: "Redis i worker", stack: "Redis · kolejka · retry", goal: "Przetwarzanie zadań w tle, ponawianie i ochrona przed powtórnym wykonaniem zadania." },
+  {
+    id: "worker",
+    state: "lab",
+    title: "Redis i worker",
+    stack: "LAB 06 · Redis · RQ · retry",
+    goal: "Zleć powiadomienie przez API, przetwórz je w tle i sprawdź zachowanie kolejki podczas awarii.",
+    guide: "https://github.com/Dawid26/DevOpsProjectAI/blob/main/docs/LAB-06.md",
+  },
   { id: "cd", state: "plan", title: "Obrazy i wdrożenia", stack: "GHCR · SBOM · CD", goal: "Publikacja wersjonowanych obrazów, zapis składu obrazu i ćwiczenie rollbacku." },
   { id: "k8s", state: "plan", title: "Kubernetes", stack: "kind · Deployment · Service", goal: "Przeniesienie aplikacji na lokalny klaster, konfiguracja sond i sprawdzenie skalowania." },
   { id: "etap-monitoring", state: "plan", title: "Helm i obserwowalność", stack: "Helm · Prometheus · Grafana · Loki", goal: "Dashboard, alert na wzrost błędów HTTP 5xx i runbook z krokami diagnozy." },
@@ -147,6 +154,13 @@ function renderStage(stage, index) {
   const goal = document.createElement("p");
   goal.textContent = stage.goal;
   detail.append(stack, goal);
+  if (stage.guide) {
+    const link = document.createElement("a");
+    link.className = "text-link";
+    link.href = stage.guide;
+    link.textContent = "Otwórz instrukcję LAB 06";
+    detail.append(link);
+  }
   details.append(summary, detail);
   row.append(details);
   return row;
