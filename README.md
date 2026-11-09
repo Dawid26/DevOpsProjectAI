@@ -17,3 +17,9 @@ Otwórz [localhost:8080](http://127.0.0.1:8080/). Strona jest statyczna i dział
 [LAB 06 — Redis, kolejka i worker](docs/LAB-06.md) prowadzi przez dodanie powiadomień w tle, ponawianie zadań i symulację awarii kolejki. Gotowy kod i konfiguracja są w [examples/lab-06](examples/lab-06).
 
 [LAB 07 — obrazy Docker, GHCR i rollback krok po kroku](docs/LAB-07.md) zawiera budowę obrazu, gotowy workflow, uruchomienie wybranej wersji i powrót do poprzedniej. Szablony znajdziesz w [examples/lab-07](examples/lab-07).
+
+[LAB 08 — Kubernetes krok po kroku](docs/LAB-08.md) zawiera lokalny klaster kind, manifesty API, workera, PostgreSQL i Redis oraz ćwiczenia skalowania i awarii. Pliki są w [examples/lab-08](examples/lab-08).
+
+## Zrozum projekt
+
+Otwórz [zrozum-projekt.html](zrozum-projekt.html), aby przeczytać prostym językiem, co robi każda część projektu. Zakładka prowadzi przez jedno zgłoszenie, kolejkę, bazę, kontenery i kolejne etapy nauki.

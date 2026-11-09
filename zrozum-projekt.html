@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#141816">
+  <meta name="description" content="IncidentFlow wyjaśniony krok po kroku. Zrozum API, bazę, kolejkę, workera, Docker i Kubernetes na jednym przykładzie.">
+  <title>Zrozum projekt — IncidentFlow</title>
+  <link rel="icon" href="mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Przejdź do treści</a>
+  <svg class="icon-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M2 12h5l3-7 4 14 3-7h5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v15m-6-6 6 6 6-6"/></symbol>
+    <symbol id="i-diag" viewBox="0 0 24 24"><path d="M6 18 18 6M8 6h10v10"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="6" y="10" width="12" height="10" rx="2"/><path d="M9 10V7a3 3 0 0 1 6 0v3m-3 4v2"/></symbol>
+    <symbol id="i-terminal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3m6 0h4"/></symbol>
+    <symbol id="i-api" viewBox="0 0 24 24"><path d="m9 6-6 6 6 6m6-12 6 6-6 6m-2-15-2 18"/></symbol>
+    <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></symbol>
+    <symbol id="i-volume" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 14h18m-5 2.5h.01m2 0h.01"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14m-7-7v14"/></symbol>
+    <symbol id="i-git" viewBox="0 0 24 24"><circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="6" r="2"/><path d="M6 7v10M18 8c0 5-5 5-7 5H6"/></symbol>
+  </svg>
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <a class="brand" href="index.html#top" aria-label="IncidentFlow — początek strony">
+        <span class="brand-mark"><svg class="icon" aria-hidden="true"><use href="#i-pulse"/></svg></span>
+        <span>IncidentFlow<span class="brand-dot">.</span></span>
+      </a>
+      <nav aria-label="Nawigacja portfolio">
+        <a href="index.html#architektura">Architektura</a><a href="index.html#docker">Docker</a><a href="index.html#monitoring">Monitoring</a><a href="index.html#postepy">Postępy</a><a href="zrozum-projekt.html" aria-current="page">Zrozum projekt</a>
+      </nav>
+      <span class="private"><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg> Prywatne</span>
+    </div>
+  </header>
+  <main id="main" class="reader shell">
+      <header class="reader-intro">
+        <p class="eyebrow">WYJAŚNIENIA / OD PODSTAW</p>
+        <h1>Zrozum projekt,<br>krok po kroku.</h1>
+        <p class="reader-lead">Prześledźmy jedno zgłoszenie. Zobaczysz, co robi każda część aplikacji i po co w ogóle ją dodajemy.</p>
+        <p>W tych opisach numer 42 jest przykładem numeru incydentu. U Ciebie aplikacja może nadać inny numer. Czytaj po jednym punkcie. Do poleceń i kodu wrócisz w instrukcjach labów.</p>
+      </header>
+
+      <nav class="reader-contents" aria-label="Spis wyjaśnień">
+        <a href="#pomysl">1. Co budujemy</a>
+        <a href="#pliki">2. Gdzie są pliki</a>
+        <a href="#zgloszenie">3. Co robi API</a>
+        <a href="#baza">4. Co zapisuje baza</a>
+        <a href="#kolejka">5. Po co Redis i worker</a>
+        <a href="#model">6. Jak czytać model</a>
+        <a href="#powtorka">7. Co daje ponowienie</a>
+        <a href="#docker-prosto">8. Co robi Docker</a>
+        <a href="#wersje">9. Po co obrazy i GitHub</a>
+        <a href="#kubernetes-prosto">10. Po co Kubernetes</a>
+        <a href="#zdrowie">11. Jak rozpoznać awarię</a>
+        <a href="#twoj-krok">12. Twój najbliższy krok</a>
+      </nav>
+
+      <section id="pomysl">
+        <p class="eyebrow">01 / POMYSŁ</p>
+        <h2>Co właściwie budujemy?</h2>
+        <p>Wyobraź sobie, że pracujesz w zespole obsługującym aplikację. Ktoś zauważył awarię i chce ją zgłosić. Podaje tytuł „API nie odpowiada” i ważność „high”. Nasz projekt przyjmuje takie zgłoszenie, zapisuje je i pozwala później zmienić jego status.</p>
+        <p>Takie zgłoszenie nazywamy incydentem. IncidentFlow to nazwa naszej aplikacji do pracy z tymi zgłoszeniami. Kolejne laby uczą, jak ją uruchamiać, rozwijać i diagnozować.</p>
+      </section>
+
+      <section id="pliki">
+        <p class="eyebrow">02 / MIEJSCE PRACY</p>
+        <h2>Dlaczego widzisz kilka katalogów?</h2>
+        <p>Repozytorium <strong>DevOpsProjectAI</strong> zawiera tę stronę, instrukcje i przykłady. Katalog <code>examples/lab-06</code> przechowuje pliki, które możesz obejrzeć i skopiować.</p>
+        <p>Sama aplikacja IncidentFlow pochodzi z paczki projektu. W jej katalogu znajdziesz <code>compose.yaml</code>, folder <code>api</code> i plik <code>api/app/main.py</code>. Instrukcja LAB 06 mówi, gdzie skopiować każdy przykład. Polecenia <code>docker compose</code> wykonujesz właśnie z katalogu aplikacji.</p>
+        <p>Gdy wpiszesz w terminalu <code>pwd</code>, zobaczysz miejsce, w którym aktualnie jesteś. Polecenie <code>ls</code> pokaże pliki w tym miejscu. To pierwsza kontrola, gdy polecenie zgłasza „file not found”.</p>
+      </section>
+
+      <section id="zgloszenie">
+        <p class="eyebrow">03 / PRZYJĘCIE ŻĄDANIA</p>
+        <h2>Co robi FastAPI?</h2>
+        <p>FastAPI jest biblioteką, przy użyciu której napisaliśmy część aplikacji odbierającą żądania HTTP. Gdy wysyłasz nowe zgłoszenie, żądanie zawiera jego tytuł i ważność. Kod sprawdza dane, zapisuje zgłoszenie i wysyła odpowiedź.</p>
+        <p>Adres <code>/incidents</code> prowadzi do operacji związanych ze zgłoszeniami. Metoda <code>POST</code> służy tutaj do utworzenia zgłoszenia, a <code>GET</code> do odczytu. Para metody i ścieżki, np. <code>POST /incidents</code>, jest nazywana endpointem.</p>
+        <p>Pod <code>/docs</code> FastAPI udostępnia formularze do wywoływania tych endpointów. Możesz utworzyć incydent w przeglądarce i zobaczyć odpowiedź z jego numerem. Program <code>curl</code> pozwala wysłać podobne żądanie z terminala.</p>
+      </section>
+
+      <section id="baza">
+        <p class="eyebrow">04 / ZAPIS</p>
+        <h2>Gdzie zostaje zgłoszenie?</h2>
+        <p>PostgreSQL przechowuje dane w tabelach. Tabelę możesz na początek wyobrazić sobie jako arkusz. Kolumny opisują rodzaje informacji, a każdy wiersz odpowiada jednemu zapisowi.</p>
+        <p>W tabeli <code>incidents</code> jeden wiersz może oznaczać incydent nr 42 o tytule „API nie odpowiada”, ważności „high” i statusie „open”. Gdy poprosisz API o incydent 42, aplikacja odczyta ten wiersz z PostgreSQL i odeśle jego dane.</p>
+        <p>W Compose pliki bazy przechowuje nazwany wolumen. Zatrzymanie lub wymiana kontenera bazy pozwala zachować dane w tym wolumenie. Kopia zapasowa jest osobnym mechanizmem, który przećwiczymy w dalszym etapie.</p>
+      </section>
+
+      <section id="kolejka">
+        <p class="eyebrow">05 / LAB 06</p>
+        <h2>Po co dokładamy Redis i workera?</h2>
+        <p>Po utworzeniu incydentu chcesz zlecić dodatkową pracę, np. powiadomienie. Część takich operacji może potrwać. API może przyjąć zlecenie i przekazać jego wykonanie osobnemu procesowi.</p>
+        <p>Wysyłasz <code>POST /incidents/42/notification</code>. API najpierw sprawdza, czy incydent 42 istnieje. Potem biblioteka RQ zapisuje w Redis zadanie zawierające wskazanie funkcji i numer incydentu. W odpowiedzi dostajesz kod 202 i identyfikator <code>job_id</code>.</p>
+        <p><strong>Kod 202 oznacza przyjęcie zlecenia.</strong> Zadanie może w tym momencie nadal czekać. Worker to osobny proces Pythona, który nasłuchuje na kolejce <code>notifications</code>. Kiedy pobierze zadanie, uruchamia funkcję <code>notify_incident(42)</code>.</p>
+        <p>W naszym ćwiczeniu wykonanie powiadomienia jest symulowane przez zapis w tabeli <code>notification_events</code>. Worker wypisuje też wynik w logach. Te dwa miejsca pozwalają sprawdzić, czy zadanie faktycznie zostało wykonane.</p>
+      </section>
+
+      <section id="model">
+        <p class="eyebrow">06 / CZYTANIE KODU</p>
+        <h2>Co opisuje NotificationEvent?</h2>
+        <p>Plik <code>notification_models.py</code> opisuje strukturę tabeli powiadomień. Klasa <code>NotificationEvent</code> korzysta ze wspólnej klasy <code>Base</code>, dzięki czemu SQLAlchemy zna ten model. Linia <code>__tablename__ = "notification_events"</code> wybiera nazwę tabeli.</p>
+        <p>Kolumna <code>id</code> identyfikuje wpis o powiadomieniu. Kolumna <code>incident_id</code> wskazuje numer incydentu, którego dotyczy wpis. To dwa osobne numery. Powiadomienie nr 7 może dotyczyć incydentu nr 42.</p>
+        <p><code>ForeignKey(Incident.id)</code> wiąże numer incydentu z istniejącym zgłoszeniem w bazie. <code>Mapped[int]</code> opisuje pole o wartości całkowitej, a <code>mapped_column(...)</code> ustala jego ustawienia w tabeli. <code>nullable=False</code> zabrania braku wartości, określanego jako NULL.</p>
+        <p><code>event_type</code> zapisuje rodzaj zdarzenia, tutaj <code>incident_notification</code>. <code>String(40)</code> określa długość tekstu. Pole <code>created_at</code> przechowuje czas. Funkcja zapisana jako <code>lambda</code> dostarcza aktualny czas UTC podczas wstawiania wiersza przez SQLAlchemy, gdy nie podasz własnej daty.</p>
+        <p>Reguła <code>UniqueConstraint("incident_id", "event_type", ...)</code> pilnuje pary wartości. Dla incydentu 42 i typu <code>incident_notification</code> może istnieć jeden wiersz. Incydent 43 może mieć własny wiersz tego samego typu.</p>
+      </section>
+
+      <section id="powtorka">
+        <p class="eyebrow">07 / POWTÓRZENIA I BŁĘDY</p>
+        <h2>Co się dzieje, gdy zadanie wykonasz dwa razy?</h2>
+        <p>Dwa zlecenia mogą otrzymać dwa różne identyfikatory RQ, a mimo to dotyczyć tego samego incydentu i powiadomienia. Przy pierwszym zapisie worker tworzy wiersz i zwraca <code>created</code>. Przy kolejnym rozpoznaje tę samą parę i zwraca <code>already_exists</code>.</p>
+        <p>Odpowiadają za to reguła unikalności w tabeli i zapis <code>ON CONFLICT DO NOTHING</code> w <code>jobs.py</code>. Powtórzenie operacji zachowuje jeden wpis. Taką właściwość nazywamy w tym ćwiczeniu idempotencją.</p>
+        <p>Retry oznacza kolejną próbę po błędzie. Jeśli funkcja zgłosi wyjątek, ustawienie <code>Retry(max=2, interval=[5, 10])</code> pozwala zaplanować dwie dodatkowe próby. Do tego worker działa z opcją <code>--with-scheduler</code>. Plik <code>retry_demo.py</code> celowo psuje pierwszą próbę, abyś mógł prześledzić to w logach.</p>
+      </section>
+
+      <section id="docker-prosto">
+        <p class="eyebrow">08 / URUCHOMIENIE</p>
+        <h2>Co robią Dockerfile i Compose?</h2>
+        <p>Dockerfile to instrukcja przygotowania obrazu aplikacji. Wybiera Pythona, instaluje biblioteki i kopiuje nasz kod. Obraz jest gotową paczką do uruchomienia.</p>
+        <p>Kontener to uruchomiony proces korzystający z takiego obrazu. Z tego samego obrazu aplikacji uruchamiamy API i workera. Każdy dostaje inne polecenie startowe. API odbiera HTTP, a worker czeka na zadania.</p>
+        <p>Plik Compose opisuje usługi, ich konfigurację, sieć i wolumeny. <code>docker compose up -d --build</code> buduje potrzebne obrazy i uruchamia usługi w tle. <code>docker compose ps</code> pokazuje kontenery, a <code>docker compose logs worker</code> pokazuje wiadomości wypisane przez workera.</p>
+        <p>W dodatkach do LAB 06 łączymy bazowy plik <code>compose.yaml</code> z plikiem <code>compose.lab06.yaml</code>. Polecenie <code>export COMPOSE_FILE=compose.yaml:compose.lab06.yaml</code> wskazuje oba pliki w bieżącej sesji terminala.</p>
+      </section>
+
+      <section id="wersje">
+        <p class="eyebrow">09 / LAB 07</p>
+        <h2>Po co GitHub i rejestr obrazów?</h2>
+        <p>Git przechowuje historię zmian kodu. Commit zapisuje wybrany stan plików, a push wysyła commity do repozytorium na GitHubie. Możesz dzięki temu sprawdzić, co zmieniłeś w kolejnym etapie.</p>
+        <p>GitHub Actions wykonuje przygotowany zestaw poleceń na runnerze, czyli maszynie uruchamiającej workflow. W LAB 07 testuje aplikację i buduje jej obraz. Gotowy obraz zapisuje w GHCR, magazynie obrazów GitHuba.</p>
+        <p>Tag jest nazwą wersji obrazu. Digest jest odciskiem konkretnej zawartości obrazu. Wdrożenie wskazujące digest pozwala wybrać dokładnie tę paczkę, którą wcześniej sprawdziłeś. SBOM opisuje jej składniki i wersje bibliotek.</p>
+        <p>Gdy wersja B sprawia problem, możesz ponownie uruchomić sprawdzony obraz A. To rollback. W LAB 07 robisz go ręcznie i odczytujesz pole <code>version</code> z API, aby zobaczyć zmianę.</p>
+      </section>
+
+      <section id="kubernetes-prosto">
+        <p class="eyebrow">10 / LAB 08</p>
+        <h2>Co wnosi Kubernetes?</h2>
+        <p>Kubernetes zarządza uruchamianiem aplikacji według opisu zapisanego w plikach YAML. W LAB 08 uruchamiasz go lokalnie przez narzędzie kind. Klaster jest środowiskiem, w którym Kubernetes utrzymuje nasze usługi.</p>
+        <p>Pod to jednostka uruchomienia kontenera. Deployment opisuje, jaki obraz ma działać i ile kopii aplikacji potrzebujesz. Jeśli usuniesz jeden Pod API, Deployment utworzy nowy, żeby znów zgadzała się liczba kopii.</p>
+        <p>Service daje aplikacji stały adres w klastrze, mimo że Pody mogą być wymieniane. ConfigMap przechowuje zwykłe ustawienia, a Secret przekazuje dane takie jak hasło bazy. PostgreSQL otrzymuje własny zasób pamięci, aby jego dane przetrwały wymianę Poda.</p>
+        <p>Najpierw uruchomisz jedną kopię API. Potem zwiększysz ich liczbę do dwóch i sprawdzisz, czy po usunięciu jednej Kubernetes odtworzy brakującą kopię. To ćwiczenie na konkretnym, widocznym zachowaniu systemu.</p>
+      </section>
+
+      <section id="zdrowie">
+        <p class="eyebrow">11 / DIAGNOSTYKA</p>
+        <h2>Jak rozpoznać, co działa?</h2>
+        <p>Endpoint <code>/health</code> sprawdza w naszym projekcie, czy działa proces HTTP. Endpoint <code>/ready</code> sprawdza dodatkowo połączenie z PostgreSQL przez zapytanie <code>SELECT 1</code>. Dlatego po zatrzymaniu bazy możesz dostać 200 z <code>/health</code> i 503 z <code>/ready</code>.</p>
+        <p>Readiness w Kubernetes pomaga ustalić, do których Podów można kierować ruch. Liveness pomaga rozpoznać sytuację wymagającą restartu kontenera. Startup probe daje aplikacji czas na zakończenie uruchamiania.</p>
+        <p>W LAB 06 błąd 404 oznacza, że podany incydent nie istnieje. Błąd 503 z endpointu powiadomień może oznaczać niedostępność Redis. Po kodzie odpowiedzi sprawdź tekst błędu oraz logi usługi, która miała wykonać pracę.</p>
+      </section>
+
+      <section id="twoj-krok">
+        <p class="eyebrow">12 / PRACA W SWOIM TEMPIE</p>
+        <h2>Od czego zacząć teraz?</h2>
+        <p>Zacznij od jednego wyniku w LAB 06. Uruchom Redis i sprawdź, czy zwraca <code>PONG</code>. Potem utwórz incydent, zleć powiadomienie i poszukaj jego numeru w logach workera. Dopiero potem obejrzyj wiersz w tabeli powiadomień.</p>
+        <p>Przy każdym kroku odpowiedz sobie na trzy pytania. Co właśnie uruchomiłem? Do której części aplikacji trafiła informacja? Jaki wynik potwierdza, że to zadziałało?</p>
+        <p>Jeśli wynik jest inny niż w instrukcji, zanotuj polecenie i pełny komunikat. Na tej podstawie można ustalić, czy problem dotyczy katalogu, pliku, połączenia, kodu czy danych.</p>
+        <p><a href="https://github.com/Dawid26/DevOpsProjectAI/blob/main/docs/LAB-06.md">Otwórz LAB 06 z przykładami</a> · <a href="https://github.com/Dawid26/DevOpsProjectAI/blob/main/docs/LAB-07.md">Otwórz LAB 07</a> · <a href="https://github.com/Dawid26/DevOpsProjectAI/blob/main/docs/LAB-08.md">Otwórz LAB 08</a></p>
+      </section>
+      <p class="reader-sources">Szczegóły techniczne możesz sprawdzić w dokumentacji <a href="https://python-rq.org/docs/">RQ</a>, <a href="https://docs.sqlalchemy.org/en/20/orm/declarative_tables.html">SQLAlchemy</a>, <a href="https://docs.docker.com/compose/">Docker Compose</a> i <a href="https://kubernetes.io/docs/concepts/">Kubernetes</a>.</p>
+  </main>
+  <footer class="footer">
+    <div class="shell footer-inner">
+      <a href="index.html" class="brand">IncidentFlow<span class="brand-dot">.</span></a>
+      <span>WYJAŚNIENIA KROK PO KROKU</span>
+      <a class="back-top" href="#main">Wróć na górę</a>
+    </div>
+  </footer>
+</body>
+</html>
