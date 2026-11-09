@@ -47,7 +47,14 @@ const stages = [
     goal: "Zleć powiadomienie przez API, przetwórz je w tle i sprawdź zachowanie kolejki podczas awarii.",
     guide: "https://github.com/Dawid26/DevOpsProjectAI/blob/main/docs/LAB-06.md",
   },
-  { id: "cd", state: "plan", title: "Obrazy i wdrożenia", stack: "GHCR · SBOM · CD", goal: "Publikacja wersjonowanych obrazów, zapis składu obrazu i ćwiczenie rollbacku." },
+  {
+    id: "cd",
+    state: "lab",
+    title: "Obrazy i wdrożenia",
+    stack: "LAB 07 · Docker · GHCR · SBOM",
+    goal: "Zbuduj obraz, zapisz go w GHCR, uruchom wybraną wersję i przećwicz powrót do poprzedniej.",
+    guide: "https://github.com/Dawid26/DevOpsProjectAI/blob/main/docs/LAB-07.md",
+  },
   { id: "k8s", state: "plan", title: "Kubernetes", stack: "kind · Deployment · Service", goal: "Przeniesienie aplikacji na lokalny klaster, konfiguracja sond i sprawdzenie skalowania." },
   { id: "etap-monitoring", state: "plan", title: "Helm i obserwowalność", stack: "Helm · Prometheus · Grafana · Loki", goal: "Dashboard, alert na wzrost błędów HTTP 5xx i runbook z krokami diagnozy." },
   { id: "terraform", state: "plan", title: "Terraform i AWS", stack: "IaC · IAM · VPC · AWS", goal: "Opis infrastruktury w kodzie i przygotowanie planu dla opcjonalnego wdrożenia w chmurze." },
@@ -158,7 +165,7 @@ function renderStage(stage, index) {
     const link = document.createElement("a");
     link.className = "text-link";
     link.href = stage.guide;
-    link.textContent = "Otwórz instrukcję LAB 06";
+    link.textContent = "Otwórz instrukcję ćwiczenia";
     detail.append(link);
   }
   details.append(summary, detail);

@@ -1,0 +1,5 @@
+services:
+  api:
+    image: ${APP_IMAGE:?Set APP_IMAGE to the GHCR image digest}
+  worker:
+    image: ${APP_IMAGE:?Set APP_IMAGE to the same GHCR image digest}

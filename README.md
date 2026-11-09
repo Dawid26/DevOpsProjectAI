@@ -15,3 +15,5 @@ Otwórz [localhost:8080](http://127.0.0.1:8080/). Strona jest statyczna i dział
 ## Kontynuacja laboratorium
 
 [LAB 06 — Redis, kolejka i worker](docs/LAB-06.md) prowadzi przez dodanie powiadomień w tle, ponawianie zadań i symulację awarii kolejki.
+
+[LAB 07 — obrazy Docker, GHCR i rollback krok po kroku](docs/LAB-07.md) zawiera budowę obrazu, gotowy workflow, uruchomienie wybranej wersji i powrót do poprzedniej. Szablony znajdziesz w [examples/lab-07](examples/lab-07).
