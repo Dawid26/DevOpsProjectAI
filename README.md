@@ -23,3 +23,11 @@ Otwórz [localhost:8080](http://127.0.0.1:8080/). Strona jest statyczna i dział
 ## Zrozum projekt
 
 Otwórz [zrozum-projekt.html](zrozum-projekt.html), aby przeczytać prostym językiem, co robi każda część projektu. Zakładka prowadzi przez jedno zgłoszenie, kolejkę, bazę, kontenery i kolejne etapy nauki.
+
+## Kolejne rozdziały
+
+- [LAB 09 — Helm, Prometheus, Grafana i pierwszy alert](docs/LAB-09.md). [Konfiguracja](examples/lab-09).
+- [LAB 10 — Terraform od pierwszego planu do przygotowania AWS](docs/LAB-10.md). [Przykłady lokalne i plan AWS](examples/lab-10).
+- [LAB 11 — skan obrazu, uprawnienia kontenera i RBAC](docs/LAB-11.md). [Przykłady](examples/lab-11).
+
+Wykonuj je w kolejności 09 → 10 → 11. Każdy rozdział zawiera wyjaśnienia, punkty kontrolne i zadanie do samodzielnego sprawdzenia.

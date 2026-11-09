@@ -1,0 +1,26 @@
+fullnameOverride: observe
+grafana:
+  enabled: true
+  service:
+    type: ClusterIP
+prometheus:
+  prometheusSpec:
+    retention: 6h
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 100m
+      limits:
+        memory: 1Gi
+additionalPrometheusRulesMap:
+  incidentflow:
+    groups:
+      - name: incidentflow.availability
+        rules:
+          - alert: IncidentFlowApiUnavailable
+            expr: kube_deployment_status_replicas_available{namespace="incidentflow",deployment="api"} == 0
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              summary: API IncidentFlow ma zero dostępnych replik
