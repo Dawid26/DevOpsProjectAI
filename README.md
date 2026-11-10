@@ -30,4 +30,6 @@ Otwórz [zrozum-projekt.html](zrozum-projekt.html), aby przeczytać prostym jęz
 - [LAB 10 — Terraform od pierwszego planu do przygotowania AWS](docs/LAB-10.md). [Przykłady lokalne i plan AWS](examples/lab-10).
 - [LAB 11 — skan obrazu, uprawnienia kontenera i RBAC](docs/LAB-11.md). [Przykłady](examples/lab-11).
 
-Wykonuj je w kolejności 09 → 10 → 11. Każdy rozdział zawiera wyjaśnienia, punkty kontrolne i zadanie do samodzielnego sprawdzenia.
+- [LAB 12 — backup PostgreSQL i próba odzyskiwania danych](docs/LAB-12.md). [Skrypty i raport](examples/lab-12).
+
+Wykonuj je w kolejności 09 → 10 → 11 → 12. Każdy rozdział zawiera wyjaśnienia, punkty kontrolne i zadanie do samodzielnego sprawdzenia.
