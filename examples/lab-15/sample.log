@@ -1,0 +1,3 @@
+INFO incident_id=42 notification=queued
+ERROR incident_id=42 redis_unavailable
+INFO incident_id=42 notification=created

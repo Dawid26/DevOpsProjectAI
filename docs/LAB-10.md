@@ -1,5 +1,8 @@
 # LAB 10 — Terraform od pierwszego planu do przygotowania AWS
 
+[Spis wszystkich działów](COURSE.md) · [Proste wyjaśnienia tego działu](OD-ZERA.md#lab-10)
+
+
 Terraform pozwala opisać oczekiwany stan w plikach. Polecenie plan pokazuje proponowane zmiany, a apply je wykonuje. State zapisuje informacje o zasobach zarządzanych przez dany katalog konfiguracji.
 
 Najpierw przećwiczysz ten mechanizm lokalnie, na danych planu wdrożenia IncidentFlow. Następnie obejrzysz osobną konfigurację sieci AWS.

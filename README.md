@@ -1,4 +1,9 @@
-# DevOpsProjectAI
+# DevOpsProjectAI — IncidentFlow
+
+**Zacznij tutaj: [cała ścieżka 17 działów](docs/COURSE.md).**
+
+[Wyjaśnienia od zera — prostym językiem](docs/OD-ZERA.md) tłumaczą każdy dział, komendy i kod NotificationEvent. [Kod startowy aplikacji](examples/starter) oraz gotowe przykłady są w tym repozytorium.
+
 
 Portfolio projektu edukacyjnego IncidentFlow. Strona prezentuje architekturę lokalnego środowiska FastAPI i PostgreSQL, uruchomienie przez Docker Compose, symulację diagnostyki awarii i filtrowaną ścieżkę nauki.
 
@@ -33,3 +38,13 @@ Otwórz [zrozum-projekt.html](zrozum-projekt.html), aby przeczytać prostym jęz
 - [LAB 12 — backup PostgreSQL i próba odzyskiwania danych](docs/LAB-12.md). [Skrypty i raport](examples/lab-12).
 
 Wykonuj je w kolejności 09 → 10 → 11 → 12. Każdy rozdział zawiera wyjaśnienia, punkty kontrolne i zadanie do samodzielnego sprawdzenia.
+
+## Zakończenie ścieżki
+
+- [LAB 13 — GitOps i Argo CD](docs/LAB-13.md).
+- [LAB 14 — Metryki HTTP](docs/LAB-14.md).
+- [LAB 15 — Logi i Loki](docs/LAB-15.md).
+- [LAB 16 — Ansible](docs/LAB-16.md).
+- [LAB 17 — Próba końcowa](docs/LAB-17.md).
+
+Materiały opisują ćwiczenia edukacyjne. Własne wyniki zaznaczaj dopiero po uruchomieniu. [Zakres sprawdzenia przykładów](docs/VALIDATION.md).

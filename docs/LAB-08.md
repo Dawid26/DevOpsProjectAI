@@ -1,5 +1,8 @@
 # LAB 08 — Kubernetes krok po kroku
 
+[Spis wszystkich działów](COURSE.md) · [Proste wyjaśnienia tego działu](OD-ZERA.md#lab-08)
+
+
 W tym labie uruchomisz IncidentFlow w lokalnym Kubernetes. Zobaczysz działającą aplikację, zwiększysz liczbę jej kopii i sprawdzisz, jak klaster odtwarza usunięty Pod. Wyjaśnienia całego projektu znajdziesz także w zakładce [Zrozum projekt](../zrozum-projekt.html).
 
 **Co jest potrzebne.** Pracujesz w Ubuntu/WSL z działającym Dockerem. Zainstaluj narzędzia według oficjalnych instrukcji [kind](https://kind.sigs.k8s.io/docs/user/quick-start/) i [kubectl dla Linuksa](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/). Przygotuj kilka GB wolnej pamięci RAM. Użyj aplikacji po LAB 06, w której działa endpoint powiadomień, model nowej tabeli i worker. Szablony są w [examples/lab-08](../examples/lab-08).

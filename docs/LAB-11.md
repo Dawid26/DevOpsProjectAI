@@ -1,5 +1,8 @@
 # LAB 11 — skan obrazu, uprawnienia kontenera i RBAC
 
+[Spis wszystkich działów](COURSE.md) · [Proste wyjaśnienia tego działu](OD-ZERA.md#lab-11)
+
+
 W tym labie sprawdzisz trzy osobne rzeczy. Czy biblioteki w obrazie mają znane podatności? Z jakimi uprawnieniami działa proces API? Jakie operacje w Kubernetes może wykonać wybrane konto techniczne?
 
 Pracuj na klastrze kind z LAB 08. Przykłady są w [examples/lab-11](../examples/lab-11). Ustaw LAB_SOURCE na katalog repozytorium, a KUBECONFIG na plik klastra ćwiczeniowego.

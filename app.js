@@ -63,10 +63,15 @@ const stages = [
     goal: "Uruchom lokalny klaster, sprawdź sondy API i zobacz odtworzenie brakującego Poda.",
     guide: "https://github.com/Dawid26/DevOpsProjectAI/blob/main/docs/LAB-08.md",
   },
-  { id: "etap-monitoring", state: "plan", title: "Helm i obserwowalność", stack: "Helm · Prometheus · Grafana · Loki", goal: "Dashboard, alert na wzrost błędów HTTP 5xx i runbook z krokami diagnozy." },
-  { id: "terraform", state: "plan", title: "Terraform i AWS", stack: "IaC · IAM · VPC · AWS", goal: "Opis infrastruktury w kodzie i przygotowanie planu dla opcjonalnego wdrożenia w chmurze." },
-  { id: "security", state: "plan", title: "Bezpieczeństwo", stack: "Trivy · RBAC · sekrety", goal: "Skan obrazu i ograniczenie uprawnień usług oraz dostępu do sekretów." },
-  { id: "sre", state: "plan", title: "GitOps, backup i odzyskiwanie", stack: "Argo CD · PostgreSQL · postmortem", goal: "Odtworzenie danych z kopii po kontrolowanej awarii i udokumentowanie wyniku." },
+  {"id": "lab-09", "state": "lab", "title": "Helm i monitoring", "stack": "LAB 09", "goal": "Zobaczyć metryki i alert.", "guide": "https://github.com/Dawid26/DevOpsProjectAI/blob/main/docs/LAB-09.md"},
+  {"id": "lab-10", "state": "lab", "title": "Terraform", "stack": "LAB 10", "goal": "Przeczytać i wykonać lokalny plan.", "guide": "https://github.com/Dawid26/DevOpsProjectAI/blob/main/docs/LAB-10.md"},
+  {"id": "lab-11", "state": "lab", "title": "Bezpieczeństwo", "stack": "LAB 11", "goal": "Sprawdzić obraz i uprawnienia.", "guide": "https://github.com/Dawid26/DevOpsProjectAI/blob/main/docs/LAB-11.md"},
+  {"id": "lab-12", "state": "lab", "title": "Backup", "stack": "LAB 12", "goal": "Odtworzyć dane z kopii.", "guide": "https://github.com/Dawid26/DevOpsProjectAI/blob/main/docs/LAB-12.md"},
+  {"id": "lab-13", "state": "lab", "title": "GitOps i Argo CD", "stack": "LAB 13", "goal": "Porównać Git ze stanem klastra.", "guide": "https://github.com/Dawid26/DevOpsProjectAI/blob/main/docs/LAB-13.md"},
+  {"id": "lab-14", "state": "lab", "title": "Metryki HTTP", "stack": "LAB 14", "goal": "Zmierzyć błędy API.", "guide": "https://github.com/Dawid26/DevOpsProjectAI/blob/main/docs/LAB-14.md"},
+  {"id": "lab-15", "state": "lab", "title": "Logi i Loki", "stack": "LAB 15", "goal": "Odnaleźć zdarzenie w logach.", "guide": "https://github.com/Dawid26/DevOpsProjectAI/blob/main/docs/LAB-15.md"},
+  {"id": "lab-16", "state": "lab", "title": "Ansible", "stack": "LAB 16", "goal": "Powtarzalnie przygotować konfigurację.", "guide": "https://github.com/Dawid26/DevOpsProjectAI/blob/main/docs/LAB-16.md"},
+  {"id": "lab-17", "state": "lab", "title": "Próba końcowa", "stack": "LAB 17", "goal": "Zdiagnozować awarię i pokazać dowody.", "guide": "https://github.com/Dawid26/DevOpsProjectAI/blob/main/docs/LAB-17.md"},
 ];
 
 const statusLabels = { base: "W kodzie", lab: "Ćwiczenie", plan: "W planie" };

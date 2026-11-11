@@ -1,5 +1,8 @@
 # LAB 07 — obrazy Docker, GHCR i rollback krok po kroku
 
+[Spis wszystkich działów](COURSE.md) · [Proste wyjaśnienia tego działu](OD-ZERA.md#lab-07)
+
+
 W LAB 06 dodawałeś Redis i workera. Teraz nauczysz się przygotować konkretną wersję aplikacji, zapisać ją na GitHubie jako obraz Docker i uruchomić ją lokalnie. Potem przygotujesz drugą wersję i wrócisz do pierwszej. Taki powrót nazywa się rollbackiem.
 
 Zarezerwuj około 60–90 minut. Wykonuj kroki po kolei. Każdy ma punkt kontrolny.

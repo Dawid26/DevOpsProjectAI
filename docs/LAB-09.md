@@ -1,5 +1,8 @@
 # LAB 09 — Helm, Prometheus, Grafana i pierwszy alert
 
+[Spis wszystkich działów](COURSE.md) · [Proste wyjaśnienia tego działu](OD-ZERA.md#lab-09)
+
+
 Wyobraź sobie, że API przestało odpowiadać. W poprzednim labie sam wpisywałeś polecenia diagnostyczne. Teraz uruchomisz narzędzia, które regularnie zbierają informacje o stanie klastra i pokazują je na wykresach.
 
 Prometheus przechowuje pomiary. Grafana pokazuje je na dashboardach. Alert to reguła, która zmienia stan, gdy pomiary spełniają określony warunek. Helm instaluje gotowy zestaw zasobów Kubernetes na podstawie pakietu nazywanego chartem.

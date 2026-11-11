@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: incidentflow-learning
+  namespace: gitops-lab
+data:
+  message: "Wersja 1: konfiguracja pochodzi z Git"

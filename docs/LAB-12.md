@@ -1,5 +1,8 @@
 # LAB 12 — backup i odzyskiwanie danych krok po kroku
 
+[Spis wszystkich działów](COURSE.md) · [Proste wyjaśnienia tego działu](OD-ZERA.md#lab-12)
+
+
 Masz już aplikację, monitoring i ograniczenia uprawnień. Teraz sprawdzisz: **czy potrafisz odzyskać zgłoszenia, gdy ktoś usunie dane?** Zrobisz kopię PostgreSQL, odtworzysz ją w osobnej bazie i porównasz wynik. Następnie zasymulujesz utratę danych wyłącznie w tej kopii testowej.
 
 Nie musisz pamiętać wszystkich poleceń. Wykonuj po jednym kroku i sprawdzaj wynik. Przykłady są w [examples/lab-12](../examples/lab-12). Wymagany jest działający klaster oraz aplikacja po [LAB 08](LAB-08.md), w tym tabele `incidents` i `notification_events` z LAB 06. LAB 09–11 nie zmieniają sposobu wykonania tego ćwiczenia.

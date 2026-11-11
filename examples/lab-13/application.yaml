@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: incidentflow-learning
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Dawid26/DevOpsProjectAI.git
+    targetRevision: main
+    path: examples/lab-13/workload
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: gitops-lab
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true

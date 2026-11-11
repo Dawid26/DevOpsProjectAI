@@ -1,5 +1,8 @@
 # LAB 06 — Redis, kolejka i worker
 
+[Spis wszystkich działów](COURSE.md) · [Proste wyjaśnienia tego działu](OD-ZERA.md#lab-06)
+
+
 Po zgłoszeniu incydentu operator chce zlecić powiadomienie i od razu dostać identyfikator zadania. Osobny worker pobierze zadanie z kolejki i zapisze w PostgreSQL ślad powiadomienia. W tym ćwiczeniu zapis w tabeli symuluje wysyłkę.
 
 **Punkt startowy** to lokalne laboratorium IncidentFlow z katalogiem `api/` i plikiem `compose.yaml`. W jego repozytorium utwórz gałąź `lab/06-redis-worker`. Ustaw `BASE_URL` na `http://localhost:8080`, jeśli po LAB 03 korzystasz z Nginx. Domyślny adres MVP to `http://localhost:8000`.

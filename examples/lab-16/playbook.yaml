@@ -1,0 +1,21 @@
+- name: Przygotuj lokalny katalog raportów IncidentFlow
+  hosts: learning
+  gather_facts: true
+  vars:
+    learning_dir: "{{ ansible_facts['env']['HOME'] }}/incidentflow-ansible-lab"
+  tasks:
+    - name: Utwórz katalog dostępny dla właściciela
+      ansible.builtin.file:
+        path: "{{ learning_dir }}"
+        state: directory
+        mode: "0700"
+    - name: Zapisz instrukcję operatora
+      ansible.builtin.copy:
+        dest: "{{ learning_dir }}/CHECKLIST.txt"
+        mode: "0600"
+        content: |
+          IncidentFlow — przed wdrożeniem
+          1. Sprawdź testy i wersję obrazu.
+          2. Sprawdź gotowość API.
+          3. Wykonaj kopię danych i sprawdź odtworzenie.
+          4. Przygotuj polecenie powrotu do poprzedniego obrazu.

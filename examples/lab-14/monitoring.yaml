@@ -1,0 +1,36 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: incidentflow-api
+  namespace: monitoring
+  labels:
+    release: observe
+spec:
+  namespaceSelector:
+    matchNames: [incidentflow]
+  selector:
+    matchLabels:
+      app: api
+  podMetricsEndpoints:
+    - port: http
+      path: /metrics
+      interval: 15s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: incidentflow-http
+  namespace: monitoring
+  labels:
+    release: observe
+spec:
+  groups:
+    - name: incidentflow.http
+      rules:
+        - alert: IncidentFlowHttp5xx
+          expr: sum(rate(incidentflow_http_responses_total{namespace="incidentflow",status=~"5.."}[2m])) > 0
+          for: 1m
+          labels:
+            severity: warning
+          annotations:
+            summary: "API zwraca odpowiedzi HTTP 5xx"
